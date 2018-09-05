@@ -24,6 +24,7 @@
     .form 
       margin-bottom: 2em;
       .group
+        margin-top: 1.5em;
         label
           opacity: 0.85;
         input
@@ -32,7 +33,7 @@
           font-size: 16px;
           padding: 0.5em;
           width: 100%;
-          margin-bottom: 2em;
+          margin-bottom: 1em;
           margin-top: 0.5em;
           transition: 0.2s ease-in-out
 
@@ -43,6 +44,18 @@
           // When not valid
           &.ng-dirty.ng-touched.ng-invalid
             border-left: solid 6px #e20303;
+        .form-error
+          overflow: none;
+          padding: 10px;
+          background: #ff8c8c;
+          transition: 0.2s ease-in;
+          color: white;
+          border-radius: 3px;
+          width: 100%;
+          &.hidden
+            height: 0px;
+            padding: 0px;
+            overflow: hidden;
     button
       color: white;
       background: #008bf8;

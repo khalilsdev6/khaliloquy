@@ -20,12 +20,17 @@
   <section class="signup">
     <div class="title-container">
       <div class="title-container__pizza-container">
-        <img src="../../assets/images/pizza.png" />
+        <img src="../../../assets/images/pizza.png" />
       </div>
       <span class="title-container__text">khaliloquy</span>
     </div>
     <h2>Create account</h2>
-    <form class="form" #signupForm="ngForm" name="signup-form" novalidate>
+    <form 
+      (ngSubmit)="onSubmit()"
+      class="form" 
+      #signupForm="ngForm" 
+      name="signup-form" 
+      novalidate>
       <div class="group">
         <label for="username">Username</label>
         <input 
@@ -36,7 +41,13 @@
           name="username" 
           minlength="3"
           maxlength="30"
+          #name="ngModel"
         />
+        <div 
+          [ngClass]="{'hidden': !(name.invalid && name.touched)}"
+          class="form-error">
+            Name is required
+        </div>
       </div>
       <div class="group">
         <label for="password">Password</label>
@@ -46,9 +57,19 @@
           required 
           [(ngModel)]="user.password" 
           name="password" 
+          #password="ngModel"
         />
+        <div 
+          [ngClass]="{'hidden': !(password.invalid && password.touched)}"
+          class="form-error">
+            A valid password is required
+        </div>
       </div>
-      <button type="submit">Continue</button>
+      <button 
+        [disabled]="!signupForm.form.valid"
+        type="submit">
+        Continue
+      </button>
     </form>
     <a routerLink="/login" routerLinkActive="active">Already have an account?</a>
   </section>
