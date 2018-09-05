@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+// --------------------------------------------------
+// Flexbox SASS mixins
+// The spec: http://www.w3.org/TR/css3-flexbox
+// --------------------------------------------------
+
+// Flexbox display
+@mixin flexbox() 
+  display: -webkit-box
+  display: -moz-box
+  display: -ms-flexbox
+  display: -webkit-flex
+  display: flex
+
+  // Flex Flow Direction
+// - applies to: flex containers
+// row | row-reverse | column | column-reverse
+@mixin flex-direction($direction) 
+  -webkit-flex-direction: $direction
+     -moz-flex-direction: $direction
+      -ms-flex-direction: $direction
+          flex-direction: $direction

@@ -1,0 +1,58 @@
+<!-- 
+  In this template, we utilized the Angular ngForm module.
+  It gets added to this form by setting a variable on the 
+  form element to equal "ngForm". 
+
+  When Angular sees "ngForm", it will actually add the directive to the 
+  form element for you. 
+
+  It requires you to have valid and unique values for the 
+  "name" attribute on each input field on the form in order to 
+  create it's own map of the current values in the form.
+  (ie: Each input element has a name property that is required by 
+  Angular forms to register the control with the form.)
+
+  The "ngForm" directive will add a bunch of different 
+  functionality to the form element for you.
+ -->
+
+<div class="signup-page">
+  <section class="signup">
+    <div class="title-container">
+      <div class="title-container__pizza-container">
+        <img src="../../assets/images/pizza.png" />
+      </div>
+      <span class="title-container__text">khaliloquy</span>
+    </div>
+    <h2>Create account</h2>
+    <form class="form" #signupForm="ngForm" name="signup-form" novalidate>
+      <div class="group">
+        <label for="username">Username</label>
+        <input 
+          id="username" 
+          type="text" 
+          required 
+          [(ngModel)]="user.username" 
+          name="username" 
+          minlength="3"
+          maxlength="30"
+        />
+      </div>
+      <div class="group">
+        <label for="password">Password</label>
+        <input 
+          id="password" 
+          type="password" 
+          required 
+          [(ngModel)]="user.password" 
+          name="password" 
+        />
+      </div>
+      <button type="submit">Continue</button>
+    </form>
+    <a routerLink="/login" routerLinkActive="active">Already have an account?</a>
+  </section>
+  <section class="message">
+    <h1>{{ message }}</h1>
+  </section>
+</div>
