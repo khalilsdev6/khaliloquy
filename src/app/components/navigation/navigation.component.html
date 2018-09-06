@@ -1,0 +1,9 @@
+<div class="profile-picture-container">
+  <img src="../../../assets/images/khalil1.png" />
+</div>
+<div class="username">{{ user?.username }}</div>
+<div class="links">
+  <a *ngFor="let navItem of navItems" routerLink="{{navItem.route}}" routerLinkActive="active">
+    {{ navItem.name }}
+  </a>
+</div>

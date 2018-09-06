@@ -13,7 +13,7 @@ import { User } from '../user';
 })
 export class AccountService {
 
-  private API_ROOT: String = `http://localhost:8000/api`;
+  private API_ROOT: String = `http://localhost:8000/v1`;
 
   constructor(private http: Http) { }
 
@@ -24,8 +24,11 @@ export class AccountService {
    * @return {Promise}
    */
 
-  createAccount (user: User) {
-    return this.http.post(`${this.API_ROOT}/account`, user).toPromise();
+  createAccount (user: User): Promise<any> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(), 2000);
+    });
+    // return this.http.post(`${this.API_ROOT}/account`, user).toPromise();
   }
 
   /*
@@ -36,7 +39,10 @@ export class AccountService {
    */
 
   login (user: User) {
-    return this.http.post(`${this.API_ROOT}/account/login`, user).toPromise();
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(), 2000);
+    });
+    // return this.http.post(`${this.API_ROOT}/account/login`, user).toPromise();
   }
 
   editAccount () {}

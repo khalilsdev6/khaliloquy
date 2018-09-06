@@ -3,6 +3,8 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { Http } from '@angular/http';
 import { User } from '../../shared/user';
 import { AccountService } from '../../shared/services/account.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +30,10 @@ export class SignupComponent implements OnInit {
     just a really simple chat app for me
     to play with Angular6 :)`;
 
-  constructor(private accountService: AccountService) { }
+  constructor(
+    private accountService: AccountService,
+    private spinner: NgxSpinnerService,
+    private router: Router) { }
 
   ngOnInit() {
     console.log(this.signupFormRef, 'this is the signup form');
@@ -59,12 +64,16 @@ export class SignupComponent implements OnInit {
   async onSubmit (): Promise<any> {
     try {
       this.toggleSubmitState(true, false, false);
+      this.spinner.show();
       const response = await this.accountService.createAccount(this.user);
       console.log(response);
       this.toggleSubmitState(false, true, false);
+      this.spinner.hide();
+      this.router.navigate(['/lobby']);
     } catch (err) {
       console.log(err);
       this.toggleSubmitState(false, false, true);
+      this.spinner.hide();
     }
   }
 }
