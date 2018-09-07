@@ -3,6 +3,7 @@ import { FriendsService } from '../../core/friends.service';
 import { Friend } from '../../shared/friend';
 import { Conversation } from '../../shared/conversation';
 import { Observable, Subscription } from 'rxjs';
+import { Message } from '../../shared/message';
 
 @Component({
   selector: 'app-friends',
@@ -28,6 +29,12 @@ export class FriendsComponent implements OnInit {
 
   clearSearchText () {
     this.searchText = "";
+  }
+
+  onMessageSent (text: string) {
+    const message = new Message(text, 'stemmlerjs');
+    this.currentConversation.messages.push(message);
+    // also send request to the backend.
   }
 
   /*

@@ -23,9 +23,14 @@
       <div class="search">
         <img class="search-button" src="../../../assets/images/ic_search_24px.svg"/>
         <input [(ngModel)]="searchText" placeholder="Search" type="text"/>
-        <img (click)="clearSearchText()" [ngStyle]="{ 'opacity': searchText ? 0.4 : 0 }" class="clear-button" src="../../../assets/images/ic_close_24px.svg"/>
+        <img 
+          (click)="clearSearchText()" 
+          [ngStyle]="{ 'opacity': searchText ? 0.4 : 0 }" 
+          class="clear-button" 
+          src="../../../assets/images/ic_close_24px.svg"
+        />
       </div>
-      <div class="friend" *ngFor="let friend of friends | searchFriends : searchText">
+      <div (click)="changeConversation(friend)" class="friend" *ngFor="let friend of friends | searchFriends : searchText">
         <div class="profile-picture-container"
         [ngStyle]="{ 'background-image': 'url(' + friend.profilePictureUrl + ')'}"></div>
         <div class="text-container">
@@ -41,6 +46,9 @@
     <!-- 
       Current conversation component.
      -->
-    <app-conversation [conversation]="currentConversation"></app-conversation>
+    <app-conversation 
+      [conversation]="currentConversation"
+      (sentMessage)="onMessageSent($event)">
+    </app-conversation>
 
   </div>

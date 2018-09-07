@@ -17,6 +17,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { CoreModule } from './core/core.module';
 import { SearchFriendsPipe } from './search-friends.pipe';
 import { ConversationComponent } from './components/conversation/conversation.component';
+import { MessageComponent } from './components/conversation/message/message.component';
 
 const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
@@ -40,7 +41,8 @@ const appRoutes: Routes = [
     FriendsComponent,
     NavigationComponent,
     SearchFriendsPipe,
-    ConversationComponent
+    ConversationComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

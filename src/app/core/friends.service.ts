@@ -10,7 +10,6 @@ import { ConversationAPIResponse } from '../shared/conversation-api-response';
 })
 export class FriendsService {
   private _baseUrl = 'http://localhost:3000/api';
-
   constructor (private http: HttpClient) {
   }
 

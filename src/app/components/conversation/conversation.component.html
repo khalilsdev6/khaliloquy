@@ -3,7 +3,7 @@
     <div class="username">{{ conversation?.friend.username }}</div>
     <div class="status">Online now</div>
   </div>
-  <div class="chat-messages">
+  <div #chatMessages class="chat-messages">
     <div 
       class="message" 
       [ngClass]="{'me' : isMessageMine(message), 'them' : !isMessageMine(message)}" 
@@ -14,5 +14,13 @@
           class="text">{{message.text}}
         </div>
     </div>
+    
+    <div *ngIf="conversation?.messages.length === 0">
+      <div class="convo-starter-message">This is the start of your conversation with {{conversation.friend.username}}.</div>
+    </div>
+  </div>
+  <div class="chat">
+    <input #chatbar (keyup.enter)="sendMessage()" placeholder="Type a message" type="text"/>
+    <div class="send-button"><img src="../../../assets/images/send_px.svg"/></div>
   </div>
 </section>

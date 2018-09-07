@@ -24,7 +24,11 @@ export class Conversation {
 
   constructor (friend: Friend, messages: Message []) {
     this.friend = new Friend(friend.username, friend.messages, friend.profilePictureUrl, friend.isOnline);
-    this.messages = messages.map((message) => new Message(message.text, message.username));
+    if (Array.isArray(messages)) {
+      this.messages = messages.map((message) => new Message(message.text, message.username));
+    } else {
+      this.messages = [];
+    }
   }
 
   getMessages (): Message [] {
@@ -34,4 +38,5 @@ export class Conversation {
   getFriend (): Friend {
     return this.friend;
   }
+  
 }
