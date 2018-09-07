@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Router } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { FormsModule } from '@angular/forms'; // gives us access to ngModel
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -14,6 +14,9 @@ import { AuthGuard } from './core/auth.guard';
 import { FriendsComponent } from './components/friends/friends.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { CoreModule } from './core/core.module';
+import { SearchFriendsPipe } from './search-friends.pipe';
+import { ConversationComponent } from './components/conversation/conversation.component';
 
 const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
@@ -35,13 +38,15 @@ const appRoutes: Routes = [
     LoginComponent,
     LobbyComponent,
     FriendsComponent,
-    NavigationComponent
+    NavigationComponent,
+    SearchFriendsPipe,
+    ConversationComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
     FormsModule,
-    HttpModule,
+    HttpClientModule, // new http module for Angular6
     Shared,
     JwtModule.forRoot({
       config: {
@@ -52,7 +57,8 @@ const appRoutes: Routes = [
         blacklistedRoutes: ['localhost:3001/auth/']
       }
     }),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

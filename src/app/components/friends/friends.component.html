@@ -8,8 +8,39 @@
      -->
   
     <app-navigation></app-navigation>
+
+    <!-- 
+      Friends / contact-list
+
+      Q: Break this section of the app into a component called
+      <contact-list>? It would look really clean if we just
+      did that and specified the props that we want to pass in 
+      here and got all of the outputs that we needed as well.
+     -->
+
     <section class="friends-section">
-      this is the entire friends section
+      <h1>Chat</h1>
+      <div class="search">
+        <img class="search-button" src="../../../assets/images/ic_search_24px.svg"/>
+        <input [(ngModel)]="searchText" placeholder="Search" type="text"/>
+        <img (click)="clearSearchText()" [ngStyle]="{ 'opacity': searchText ? 0.4 : 0 }" class="clear-button" src="../../../assets/images/ic_close_24px.svg"/>
+      </div>
+      <div class="friend" *ngFor="let friend of friends | searchFriends : searchText">
+        <div class="profile-picture-container"
+        [ngStyle]="{ 'background-image': 'url(' + friend.profilePictureUrl + ')'}"></div>
+        <div class="text-container">
+          <div class="username">{{friend.username}}</div>
+          <div class="last-message">{{friend.getLastMessage()}}</div>
+        </div>
+      </div>
+      <div *ngIf="(friends | searchFriends: searchText).length === 0">
+        Couldn't find this friend. Do you want to add them?
+      </div>
     </section>
-  
+
+    <!-- 
+      Current conversation component.
+     -->
+    <app-conversation [conversation]="currentConversation"></app-conversation>
+
   </div>

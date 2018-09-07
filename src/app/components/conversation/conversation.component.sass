@@ -1,0 +1,49 @@
+\:host 
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  padding-right: 3em;
+  padding-left: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  box-sizing: border-box;
+
+  .conversation
+    .conversation-title
+      border-bottom: solid 1px #e8e8e8;
+      padding-bottom: 0.5em;
+      margin-top: 3em;
+      .username
+        font-weight: bold;
+      .status
+        padding-top: 4px;
+        opacity: 0.6;
+        font-size: 12px
+    .chat-messages
+      margin-top: 1em;
+      .message
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5em;
+        &.me
+          flex-direction: row-reverse;
+        &.them
+          flex-direction: row;
+        .picture
+          background-size: cover;
+          max-width: 35px;
+          min-height: 35px;
+          min-width: 35px;
+          max-width: 35px;
+          border-radius: 100%;
+        .text
+          padding: 1em 2em 1em 2em;
+          border-radius: 29px;
+          &.them
+            margin-left: 1em;
+            background: #E8E6EC;
+          &.me
+            margin-right: 1em;
+            color: white;
+            background: #0089F9;
+      

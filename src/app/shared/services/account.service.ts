@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../user';
 
 /*
@@ -15,7 +15,7 @@ export class AccountService {
 
   private API_ROOT: String = `http://localhost:8000/v1`;
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   /*
    * createAccount

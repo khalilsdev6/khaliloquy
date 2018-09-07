@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FriendsService } from './friends.service';
+import { UserInfoService } from './user-info.service';
 
 /*
  * https://medium.com/@amcdnl/organizing-your-angular-application-2694ff67d335
@@ -17,9 +19,6 @@ import { CommonModule } from '@angular/common';
  */
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: []
+  providers: [FriendsService, UserInfoService]
 })
 export class CoreModule { }
