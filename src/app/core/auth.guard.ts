@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
   /*
    * canActivate
    * We need to add the canActivate property as per the CanActivate
-   * interface that we're implementing. It must return a true or 
+   * interface that we're implementing. It must return a true or
    * false as to whether we should activate the route or not.
    */
 

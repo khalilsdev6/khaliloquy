@@ -1,6 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LobbyComponent } from './lobby.component';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-navigation',
+  template: ''
+})
+class MockAppNavigationComponent {
+}
 
 describe('LobbyComponent', () => {
   let component: LobbyComponent;
@@ -8,7 +17,8 @@ describe('LobbyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LobbyComponent ]
+      declarations: [ LobbyComponent, MockAppNavigationComponent ],
+      imports: [FormsModule]
     })
     .compileComponents();
   }));

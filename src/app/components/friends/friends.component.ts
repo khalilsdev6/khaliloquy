@@ -16,7 +16,7 @@ class Time {
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.sass']
 })
-export class FriendsComponent implements OnInit, DoCheck {
+export class FriendsComponent implements OnInit {
 
   public friends: Friend [];
   subscription: Subscription;
@@ -61,10 +61,6 @@ export class FriendsComponent implements OnInit, DoCheck {
         console.log(this);
       }
     );
-  }
-
-  ngDoCheck() {
-    this.time = this.friendsService.getTime();
   }
 
   getFriends () {

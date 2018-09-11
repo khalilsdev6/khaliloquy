@@ -1,15 +1,24 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 
-import { AutheGuard } from './auth.guard';
+import { AuthGuard } from './auth.guard';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('AutheGuard', () => {
+describe('AuthGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AutheGuard]
+      providers: [AuthGuard, JwtHelperService],
+      imports: [JwtModule.forRoot({
+        config: {
+          tokenGetter: () => {
+            return '';
+          }
+        }
+      }), RouterTestingModule]
     });
   });
 
-  it('should ...', inject([AutheGuard], (guard: AutheGuard) => {
+  it('should ...', inject([AuthGuard], (guard: AuthGuard) => {
     expect(guard).toBeTruthy();
   }));
 });

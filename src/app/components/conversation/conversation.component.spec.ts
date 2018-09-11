@@ -1,6 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConversationComponent } from './conversation.component';
+import { Component } from '@angular/core';
+
+// Mock child component
+@Component({
+  selector: 'app-message',
+  template: ''
+})
+class MockAppMessagesComponent {
+}
 
 describe('ConversationComponent', () => {
   let component: ConversationComponent;
@@ -8,7 +17,7 @@ describe('ConversationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConversationComponent ]
+      declarations: [ ConversationComponent, MockAppMessagesComponent ]
     })
     .compileComponents();
   }));
