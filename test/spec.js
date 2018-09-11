@@ -1,17 +1,3 @@
-import { AppPage } from './app.po';
-
-describe('workspace-project App', () => {
-  // let page: AppPage;
-
-  // beforeEach(() => {
-  //   page = new AppPage();
-  // });
-
-  // it('should display welcome message', () => {
-  //   page.navigateTo();
-  //   expect(page.getParagraphText()).toEqual('Welcome to khaliloquy!');
-  // });
-
 
 /**
  * shouldRouteTo
@@ -63,11 +49,9 @@ describe('Khaliloquy Protractor demo', function() {
     element(by.css('.chat input')).sendKeys('Hey man, whats up?');
     element(by.css('.chat button')).click();
     let messages = element.all(by.css('.message'));
+    browser.pause();
     expect(messages.count()).toBe(1);
   });
 
   
 });
-});
-
-

@@ -8,7 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start:server": "cross-env nodemon src/app.js"
+    "start:server": "cross-env nodemon src/app.js",
+    "protractor:debug": "cross-env node --inspect-brk protractor test/conf.js",
+    "protractor": "cross-env node protractor test/conf.js"
   },
   "private": true,
   "dependencies": {

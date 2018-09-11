@@ -21,6 +21,6 @@
   </div>
   <div class="chat">
     <input #chatbar (keyup.enter)="sendMessage()" placeholder="Type a message" type="text"/>
-    <div class="send-button"><img src="../../../assets/images/send_px.svg"/></div>
+    <button (click)="sendMessage()" class="send-button"><img src="../../../assets/images/send_px.svg"/></button>
   </div>
 </section>

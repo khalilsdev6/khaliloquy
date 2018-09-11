@@ -3,7 +3,7 @@
 </div>
 <div class="username">{{ user?.username }}</div>
 <div class="links">
-  <a *ngFor="let navItem of navItems" routerLink="{{navItem.route}}" routerLinkActive="active">
+  <a id="{{navItem.route}}" *ngFor="let navItem of navItems" routerLink="{{navItem.route}}" routerLinkActive="active">
     {{ navItem.name }}
   </a>
 </div>

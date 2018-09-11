@@ -22,7 +22,7 @@
       <h1>Chat</h1>
       <div class="search">
         <img class="search-button" src="../../../assets/images/ic_search_24px.svg"/>
-        <input [(ngModel)]="searchText" placeholder="Search" type="text"/>
+        <input id="friend-search" [(ngModel)]="searchText" placeholder="Search" type="text"/>
         <img 
           (click)="clearSearchText()"
           [ngStyle]="{ 'opacity': searchText ? 0.4 : 0 }" 
@@ -30,14 +30,14 @@
           src="../../../assets/images/ic_close_24px.svg"
         />
       </div>
-      <div (click)="changeConversation(friend)" class="friend" *ngFor="let friend of friends | searchFriends : searchText">
+      <li (click)="changeConversation(friend)" class="friend" *ngFor="let friend of friends | searchFriends : searchText">
         <div class="profile-picture-container"
         [ngStyle]="{ 'background-image': 'url(' + friend.profilePictureUrl + ')'}"></div>
         <div class="text-container">
           <div class="username">{{friend.username}}</div>
           <div class="last-message">{{friend.getLastMessage()}}</div>
         </div>
-      </div>
+      </li>
       <div *ngIf="(friends | searchFriends: searchText).length === 0">
         Couldn't find this friend. Do you want to add them?
       </div>

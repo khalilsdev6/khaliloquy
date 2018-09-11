@@ -42,6 +42,7 @@
           minlength="3"
           maxlength="30"
           #name="ngModel"
+          id="username"
         />
         <div 
           [ngClass]="{'hidden': !(name.invalid && name.touched)}"
@@ -58,6 +59,7 @@
           [(ngModel)]="user.password" 
           name="password" 
           #password="ngModel"
+          id="password"
         />
         <div 
           [ngClass]="{'hidden': !(password.invalid && password.touched)}"
@@ -66,6 +68,7 @@
         </div>
       </div>
       <button 
+        id="signup-button"
         [disabled]="!signupForm.form.valid"
         type="submit">
         Continue
