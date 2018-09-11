@@ -14,7 +14,7 @@
           class="text">{{message.text}}
         </div>
     </div>
-    
+    <app-message></app-message>
     <div *ngIf="conversation?.messages.length === 0">
       <div class="convo-starter-message">This is the start of your conversation with {{conversation.friend.username}}.</div>
     </div>

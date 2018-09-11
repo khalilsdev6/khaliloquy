@@ -1,16 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
 import { FriendsService } from '../../core/friends.service';
 import { Friend } from '../../shared/friend';
 import { Conversation } from '../../shared/conversation';
 import { Observable, Subscription } from 'rxjs';
 import { Message } from '../../shared/message';
 
+class Time {
+  getCurrentTime() {
+    return Date.now();
+  }
+}
+
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.sass']
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit, DoCheck {
 
   public friends: Friend [];
   subscription: Subscription;
@@ -55,6 +61,10 @@ export class FriendsComponent implements OnInit {
         console.log(this);
       }
     );
+  }
+
+  ngDoCheck() {
+    this.time = this.friendsService.getTime();
   }
 
   getFriends () {
