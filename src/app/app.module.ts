@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Router } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms'; // gives us access to ngModel
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -18,6 +19,9 @@ import { CoreModule } from './core/core.module';
 import { SearchFriendsPipe } from './search-friends.pipe';
 import { ConversationComponent } from './components/conversation/conversation.component';
 import { MessageComponent } from './components/conversation/message/message.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { LetterAvatarComponent } from './components/letter-avatar/letter-avatar.component';
 
 const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
@@ -42,7 +46,8 @@ const appRoutes: Routes = [
     NavigationComponent,
     SearchFriendsPipe,
     ConversationComponent,
-    MessageComponent
+    MessageComponent,
+    LetterAvatarComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,9 @@ const appRoutes: Routes = [
       }
     }),
     NgxSpinnerModule,
-    CoreModule
+    CoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

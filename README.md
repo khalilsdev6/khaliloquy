@@ -1,6 +1,8 @@
 # Khaliloquy
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+Simple chat application on Angular6, styled with Sass and Firebase Authentication. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+
+Read the docs here for Firebase, they're really good. https://github.com/angular/angularfire2/blob/master/docs/rtdb/objects.md
 
 ## Development server
 

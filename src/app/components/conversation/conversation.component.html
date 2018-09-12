@@ -8,7 +8,7 @@
       class="message" 
       [ngClass]="{'me' : isMessageMine(message), 'them' : !isMessageMine(message)}" 
       *ngFor="let message of conversation?.messages">
-        <div class="picture" [ngStyle]="getMessagePicture(message)"></div>
+        <app-letter-avatar username="{{message.username}}"></app-letter-avatar>
         <div 
           [ngClass]="{'me' : isMessageMine(message), 'them' : !isMessageMine(message)}" 
           class="text">{{message.text}}

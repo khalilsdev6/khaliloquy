@@ -38,5 +38,8 @@ export class Conversation {
   getFriend (): Friend {
     return this.friend;
   }
-  
+
+  setMessages (messages: Message[]): void {
+    this.messages = messages;
+  }
 }

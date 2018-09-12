@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked } from
 import { Conversation } from '../../shared/conversation';
 import { Message } from '../../shared/message';
 import { ViewChild, ElementRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ConversationService } from '../../core/conversation.service';
 
 @Component({
   selector: 'app-conversation',
@@ -16,6 +18,7 @@ export class ConversationComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatbar') chatbarRef: ElementRef;
   @Output('sentMessage') sentMessage = new EventEmitter();
   @ViewChild('chatMessages') chatMessagesRef: ElementRef;
+
   constructor() { }
 
   ngOnInit() {
@@ -43,20 +46,5 @@ export class ConversationComponent implements OnInit, AfterViewChecked {
   isMessageMine (messageObj): boolean {
     const message = new Message(messageObj.text, messageObj.username);
     return message.isMessageFromMe(this.myUsername);
-  }
-
-  getMessagePicture (messageObj): Object {
-    const message = new Message(messageObj.text, messageObj.username);
-    if (message.isMessageFromMe(this.myUsername)) {
-      return {
-        'backgroundImage': 'url(' + "https://khalilstemmler.com/static/me.9d170f1d.jpg" + ')',
-        'color': 'blue'
-      };
-    } else {
-      return {
-        'backgroundImage': 'url(' + this.conversation.friend.profilePictureUrl + ')',
-        'color': 'blue'
-      };
-    }
   }
 }
