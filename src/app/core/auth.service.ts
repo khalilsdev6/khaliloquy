@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { AccountService } from './account.service';
@@ -14,7 +13,6 @@ export class AuthService {
   public authState = null;
 
   constructor(
-    private jwtService: JwtHelperService,
     private afAuth: AngularFireAuth,
     private accountService: AccountService,
     private router: Router
