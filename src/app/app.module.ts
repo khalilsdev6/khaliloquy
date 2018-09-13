@@ -53,15 +53,6 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule, // new http module for Angular6
     Shared,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('khaliloquy-auth-token');
-        },
-        whitelistedDomains: ['localhost:8000'],
-        blacklistedRoutes: ['localhost:3001/auth/']
-      }
-    }),
     NgxSpinnerModule,
     CoreModule,
     AngularFireModule.initializeApp(environment.firebase),

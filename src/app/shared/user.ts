@@ -6,7 +6,7 @@
 
 export class User {
   public username: string;
-  private password: string;
+  public password: string;
   public profilePictureUrl: string;
   constructor (
     username: string = '',
