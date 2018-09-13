@@ -50,8 +50,8 @@ export class AuthGuard implements CanActivate {
       tap(loggedIn => {
         console.log("[Auth Guard]: Is user logged in?: ", loggedIn);
         if (!loggedIn) {
-          console.log("[Auth Guard]: Access denied, routing to /login.");
-          this.router.navigate(['/login']);
+          console.log("[Auth Guard]: Access denied, routing to /signup.");
+          this.router.navigate(['/signup']);
           return false;
         }
       }));
