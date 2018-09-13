@@ -71,11 +71,16 @@
         id="signup-button"
         [disabled]="!signupForm.form.valid"
         type="submit">
-        Continue
+        Sign up
+      </button>
+      <section></section>
+      <button 
+        id="github-signup-button"
+        (click)="doGithubSignIn($event)">
+        Continue with Github
       </button>
       <ngx-spinner></ngx-spinner>
     </form>
-    <a routerLink="/login" routerLinkActive="active">Already have an account?</a>
   </section>
   <section class="message">
     <h1>{{ message }}</h1>

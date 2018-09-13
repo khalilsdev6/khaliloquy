@@ -36,6 +36,7 @@
           margin-bottom: 1em;
           margin-top: 0.5em;
           transition: 0.2s ease-in-out
+          box-sizing: border-box;
 
           // When valid
           &.ng-dirty.ng-valid.ng-touched
@@ -52,10 +53,17 @@
           color: white;
           border-radius: 3px;
           width: 100%;
+          box-sizing: border-box;
           &.hidden
             height: 0px;
             padding: 0px;
             overflow: hidden;
+    section 
+      width: 100%;
+      border-top: solid 1px grey;
+      margin-top: 2em;
+      opacity: 0.2;
+      margin-bottom: 1em;
     button
       color: white;
       background: #008bf8;
@@ -66,8 +74,12 @@
       box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
       cursor: pointer
       transition: 0.2s ease-in-out;
+      margin-top: 1em;
+      width: 100%;
       &:hover 
         background: #59b6ff;
+      &#github-signup-button
+        background: #232323;
     a 
       font-weight: bold
       color: #008BF8;

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Http } from '@angular/http';
 import { User } from '../../shared/user';
-import { AccountService } from '../../shared/services/account.service';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../core/user-info.service';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -29,14 +30,13 @@ export class SignupComponent implements OnInit {
     to play with Angular6 :)`;
 
   constructor(
-    private accountService: AccountService,
     private userInfoService: UserInfoService,
     private spinner: NgxSpinnerService,
-    private router: Router) { }
+    private router: Router,
+    private authService: AuthService) { }
 
   ngOnInit() {
     console.log(this.signupFormRef, 'this is the signup form');
-    console.log(this.accountService);
   }
 
   /*
@@ -46,16 +46,22 @@ export class SignupComponent implements OnInit {
    */
 
   async onSubmit (): Promise<any> {
-    try {
-      this.spinner.show();
-      const response = await this.accountService.createAccount(this.user);
-      console.log(response);
-      this.userInfoService.setUserInfo(this.user);
-      this.spinner.hide();
-      this.router.navigate(['/lobby']);
-    } catch (err) {
-      console.log(err);
-      this.spinner.hide();
-    }
+    // try {
+    //   this.spinner.show();
+    //   const response = await this.accountService.createAccount(this.user);
+    //   console.log(response);
+    //   this.userInfoService.setUserInfo(this.user);
+    //   this.spinner.hide();
+    //   this.router.navigate(['/lobby']);
+    // } catch (err) {
+    //   console.log(err);
+    //   this.spinner.hide();
+    // }
+  }
+
+  async doGithubSignIn (e) {
+    e.preventDefault();
+    await this.authService.doGithubLogin();
+    this.router.navigate(['/friends']);
   }
 }

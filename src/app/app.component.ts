@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FriendsService } from './core/friends.service';
+import { AuthService } from './core/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,14 @@ import { FriendsService } from './core/friends.service';
 export class AppComponent {
   title = 'khaliloquy';
 
-  constructor(private friendsService: FriendsService) {
-    friendsService = friendsService;
+  constructor(private friendsService: FriendsService, private authService: AuthService) {
+    this.friendsService = friendsService;
+    this.authService = authService;
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit(): void {
     this.friendsService.init('stemmlerjs');
+    this.authService.init();
   }
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccountService } from './services/account.service';
 
 /*
  * https://medium.com/@amcdnl/organizing-your-angular-application-2694ff67d335
@@ -17,9 +16,6 @@ import { AccountService } from './services/account.service';
 @NgModule({
   imports: [
     CommonModule
-  ],
-  providers: [
-    AccountService
   ]
 })
 export class Shared { }

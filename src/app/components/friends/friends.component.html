@@ -22,7 +22,13 @@
       <h1>Chat</h1>
       <div class="search">
         <img class="search-button" src="../../../assets/images/ic_search_24px.svg"/>
-        <input id="friend-search" [(ngModel)]="searchText" placeholder="Search" type="text"/>
+        <input 
+          id="friend-search" 
+          [(ngModel)]="searchText" 
+          placeholder="Search" 
+          type="text"
+          #friendsearch
+        />
         <img 
           (click)="clearSearchText()"
           [ngStyle]="{ 'opacity': searchText ? 0.4 : 0 }" 

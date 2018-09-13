@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { LoginComponent } from './components/login/login.component';
 import { Shared } from './shared/shared.module';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { AuthGuard } from './core/auth.guard';
@@ -21,11 +20,11 @@ import { ConversationComponent } from './components/conversation/conversation.co
 import { MessageComponent } from './components/conversation/message/message.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { LetterAvatarComponent } from './components/letter-avatar/letter-avatar.component';
 
 const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
-  { path: 'login', component: LoginComponent },
   { path: '',
     redirectTo: 'signup',
     pathMatch: 'full'
@@ -40,7 +39,6 @@ const appRoutes: Routes = [
     AppComponent,
     SignupComponent,
     PageNotFoundComponent,
-    LoginComponent,
     LobbyComponent,
     FriendsComponent,
     NavigationComponent,
@@ -67,7 +65,8 @@ const appRoutes: Routes = [
     NgxSpinnerModule,
     CoreModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

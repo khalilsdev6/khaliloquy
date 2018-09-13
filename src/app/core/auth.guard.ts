@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { take, map, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 /*
@@ -23,7 +24,10 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   /*
    * canActivate
@@ -35,11 +39,21 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    // TODO: Make this work on the backend.
-    // if (!this.auth.isAuthenticated()) {
-    //   this.router.navigate(['/login']);
-    //   return false;
-    // }
-    return true;
+    if (this.auth.isAuthenticated()) { return true; }
+
+    return this.auth.currentUserObservable.pipe(
+      take(1),
+      map(user => {
+        console.log('user: ', user);
+        return !!user;
+      }),
+      tap(loggedIn => {
+        console.log("[Auth Guard]: Is user logged in?: ", loggedIn);
+        if (!loggedIn) {
+          console.log("[Auth Guard]: Access denied, routing to /login.");
+          this.router.navigate(['/login']);
+          return false;
+        }
+      }));
   }
 }

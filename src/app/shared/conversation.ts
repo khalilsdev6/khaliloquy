@@ -23,7 +23,7 @@ export class Conversation {
   }
 
   constructor (friend: Friend, messages: Message []) {
-    this.friend = new Friend(friend.username, friend.messages, friend.profilePictureUrl, friend.isOnline);
+    this.friend = new Friend(friend.username, friend.lastMessage, friend.profilePictureUrl, friend.isOnline);
     if (Array.isArray(messages)) {
       this.messages = messages.map((message) => new Message(message.text, message.username));
     } else {
