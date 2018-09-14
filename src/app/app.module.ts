@@ -22,6 +22,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { LetterAvatarComponent } from './components/letter-avatar/letter-avatar.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
@@ -45,7 +46,8 @@ const appRoutes: Routes = [
     SearchFriendsPipe,
     ConversationComponent,
     MessageComponent,
-    LetterAvatarComponent
+    LetterAvatarComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

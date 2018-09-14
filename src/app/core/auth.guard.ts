@@ -27,7 +27,9 @@ export class AuthGuard implements CanActivate {
   constructor(
     private auth: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.router = router;
+  }
 
   /*
    * canActivate
@@ -54,6 +56,7 @@ export class AuthGuard implements CanActivate {
           this.router.navigate(['/signup']);
           return false;
         }
-      }));
+      })
+    );
   }
 }

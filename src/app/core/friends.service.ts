@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subscribable, Subscription, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscribable, Subscription, ReplaySubject, Subject } from 'rxjs';
 import { Friend } from '../shared/friend';
 import { Conversation } from '../shared/conversation';
 import { ConversationAPIResponse } from '../shared/conversation-api-response';
@@ -11,7 +11,15 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class FriendsService {
   private _baseUrl = 'http://localhost:3000/api';
-  private friendsList = new BehaviorSubject([]);
+
+  // Changed friendsList from BehaviourSubject to Subject so that we can
+  // present some loading animation that only gets switched off when data
+  // is recieved by a subscribed component.
+  //
+  // While we were using BehaviourSubjects, because they start out initialized
+  // with some null data, the loading animation would preemptively get shut off
+  // before the async network request had a chance to execute.
+  private friendsList = new Subject<Friend[]>();
   private friendsListSubscription: Subscription = null;
   private friendsSearch = new ReplaySubject<Friend>(null);
 
@@ -61,15 +69,16 @@ export class FriendsService {
     this.db.database.ref('users')
       .orderByChild('username')
       .equalTo(username)
-      .on('child_added', (res) => {
-        if (res.key) {
-          const json: any = res.toJSON();
-          const friend = new Friend(json.username, json.lastMessage, json.profilePictureUrl, json.isOnline);
-          this.friendsSearch.next(friend);
-        } else {
-          this.friendsSearch.next(null);
-        }
-    });
+      .on('child_added',
+        (res) => {
+          if (res.key) {
+            const json: any = res.toJSON();
+            const friend = new Friend(json.username, json.lastMessage, json.profilePictureUrl, json.isOnline);
+            this.friendsSearch.next(friend);
+          } else {
+            this.friendsSearch.next(null);
+          }
+      });
   }
 
   /**

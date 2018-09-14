@@ -4,6 +4,7 @@ import * as firebase from 'firebase/app';
 import { AccountService } from './account.service';
 import { User } from '../shared/user';
 import { Router } from '@angular/router';
+import { UserInfoService } from './user-info.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,13 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private userInfoService: UserInfoService
   ) { }
 
   init () {
     console.log('[Auth]: Observing changes on Auth Status');
-    this.afAuth.auth.onAuthStateChanged(this.handleAuthStateChanges);
+    this.afAuth.auth.onAuthStateChanged(this.handleAuthStateChanges.bind(this));
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
     });
@@ -29,10 +31,14 @@ export class AuthService {
   handleAuthStateChanges (user) {
     if (user) {
       // User is signed in.
+      const { displayName, photoURL } = user;
+      // Set user info
+      this.userInfoService.setUserInfo(new User(displayName, '', photoURL));
     } else {
       // No user is signed in.
       // Redirect them to the front page.
       console.log('[Auth]: User status changes from Logged In to Logged Out.');
+      this.userInfoService.setUserInfo(new User());
       this.router.navigate(['signup']);
     }
   }

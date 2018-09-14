@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserInfo } from '../shared/user-info';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { User } from '../shared/user';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 /**
  * @class UserInfoService
@@ -16,8 +17,34 @@ import { User } from '../shared/user';
 })
 export class UserInfoService {
   private userSubject: BehaviorSubject<User>;
-  constructor() {
+  private userSubscription: Subscription;
+
+  constructor(private db: AngularFireDatabase) {
+    this.db = db;
     this.userSubject = new BehaviorSubject<User>(new User());
+  }
+
+  /**
+   * init
+   * @function that initializes the user info service after we know this user's
+   * username.
+   * @param {String} username
+   * @return void
+   */
+
+  init (username: string) {
+    if (!this.userSubscription) {
+      this.userSubscription = this.db.list(`users/${username}`)
+        .valueChanges()
+        .subscribe(
+          (data: any) => {
+            this.userSubject.next(new User(data.username, '', data.profilePictureUrl));
+          },
+          err => {
+            console.log(err);
+          }
+        );
+    }
   }
 
   /**
@@ -40,7 +67,7 @@ export class UserInfoService {
    */
 
   getUserInfo (): Observable<User> {
-    return this.userSubject.asObservable();
+    return this.userSubject;
   }
 
 }

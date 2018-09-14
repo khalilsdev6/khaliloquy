@@ -3,7 +3,7 @@ import { FriendsService } from '../../core/friends.service';
 import { Friend } from '../../shared/friend';
 import { Conversation } from '../../shared/conversation';
 import { Observable, Subscription } from 'rxjs';
-import { debounceTime, pluck } from 'rxjs/operators';
+import { debounceTime, pluck, map } from 'rxjs/operators';
 import { Message } from '../../shared/message';
 import { ConversationService } from '../../core/conversation.service';
 import { fromEvent } from 'rxjs';
@@ -19,7 +19,7 @@ class Time {
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.sass']
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit, OnDestroy {
 
   public friends: Friend [];
   private friendsSubscription: Subscription;
@@ -27,6 +27,10 @@ export class FriendsComponent implements OnInit {
   private conversationSubscription: Subscription;
   private newFriendsSearchSubscription: Subscription;
   public searchText: string;
+  public friendsSearchResult: Friend = null;
+
+  public isLoadingFriends = true;
+  public isLoadingFriendsTimeout = null;
 
   @ViewChild('friendsearch') friendSearchInputElement: ElementRef;
 
@@ -56,6 +60,7 @@ export class FriendsComponent implements OnInit {
           if (this.friends.length !== 0) {
             this.changeConversation(this.friends[0]);
           }
+          this.isLoadingFriends = false;
         },
         err => {
           console.log(err);
@@ -88,6 +93,7 @@ export class FriendsComponent implements OnInit {
     // queries to Firebase after 300 milliseconds.
     fromEvent(this.friendSearchInputElement.nativeElement, 'keyup')
       .pipe(
+        map(this.dispatchLoadingAnimation.bind(this)),
         debounceTime(300),
         pluck('target', 'value')
       )
@@ -95,6 +101,31 @@ export class FriendsComponent implements OnInit {
         this.onFireSearchForFriend.bind(this),
         this.onError.bind(this)
       );
+  }
+
+  /**
+   * dispatchLoadingAnimation
+   * @function that gets called when were searching for new friends.
+   * It dispatches a loading animation to show while we're looking
+   * for friends and sets a timeout to tear it down after 500 seconds.
+   * This is kinda hackish, there has to be a better way to do this
+   * this observables.
+   * @param {Event} the keypress event
+   * @return {Event} return the same event
+   */
+
+  dispatchLoadingAnimation (event: any): Event {
+    if (event.target.value) {
+      this.isLoadingFriends = true;
+      this.friendsSearchResult = null;
+
+      if (this.isLoadingFriendsTimeout) {
+        clearTimeout(this.isLoadingFriendsTimeout);
+      }
+
+      this.isLoadingFriendsTimeout = setTimeout(() => { this.isLoadingFriends = false; }, 500);
+    }
+    return event;
   }
 
   clearSearchText () {
@@ -115,7 +146,8 @@ export class FriendsComponent implements OnInit {
    * in our friends list AND they're not us.
    */
 
-  onFoundFriendFromSearch(friend: Friend) {
+  onFoundFriendFromSearch(friend: Friend | null) {
+    this.friendsSearchResult = friend;
     console.log('found a friend!!!', friend);
   }
 
@@ -140,5 +172,11 @@ export class FriendsComponent implements OnInit {
 
   onError (error) {
     console.log(error);
+  }
+
+  ngOnDestroy(): void {
+    this.friendsSubscription.unsubscribe();
+    this.conversationSubscription.unsubscribe();
+    this.newFriendsSearchSubscription.unsubscribe();
   }
 }

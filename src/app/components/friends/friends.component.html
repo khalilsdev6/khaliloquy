@@ -36,6 +36,7 @@
           src="../../../assets/images/ic_close_24px.svg"
         />
       </div>
+      <!-- Existing friends -->
       <li 
         (click)="changeConversation(friend)" 
         class="friend" 
@@ -46,9 +47,24 @@
           <div class="last-message">{{friend.getLastMessage()}}</div>
         </div>
       </li>
-      <div *ngIf="(friends | searchFriends: searchText).length === 0">
+
+      <!-- New friend from search results -->
+      <li 
+        (click)="changeConversation(friend)" 
+        class="friend" 
+        *ngIf="friendsSearchResult">
+        <app-letter-avatar username="{{friendsSearchResult.username}}"></app-letter-avatar>
+        <div class="text-container">
+          <div class="username">{{friendsSearchResult.username}}</div>
+          <button class="add-friend">Add friend</button>
+        </div>
+      </li>
+
+      <div *ngIf="(friends | searchFriends: searchText).length === 0 && !isLoadingFriends && !friendsSearchResult">
         Couldn't find this friend. Do you want to add them?
       </div>
+      
+      <app-spinner *ngIf="isLoadingFriends"></app-spinner>
     </section>
 
     <!-- 
