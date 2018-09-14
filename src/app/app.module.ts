@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Router } from '@angular/router';
-import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms'; // gives us access to ngModel
 import { HttpClientModule } from '@angular/common/http';
