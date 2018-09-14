@@ -7,6 +7,7 @@ import { debounceTime, pluck, map } from 'rxjs/operators';
 import { Message } from '../../shared/message';
 import { ConversationService } from '../../core/conversation.service';
 import { fromEvent } from 'rxjs';
+import { UserInfoService } from '../../core/user-info.service';
 
 class Time {
   getCurrentTime() {
@@ -19,7 +20,7 @@ class Time {
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.sass']
 })
-export class FriendsComponent implements OnInit, OnDestroy {
+export class FriendsComponent implements OnInit {
 
   public friends: Friend [];
   private friendsSubscription: Subscription;
@@ -31,6 +32,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   public isLoadingFriends = true;
   public isLoadingFriendsTimeout = null;
+  public myUsername = "";
 
   @ViewChild('friendsearch') friendSearchInputElement: ElementRef;
 
@@ -40,7 +42,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
   // but it will be accessible to our component through DI.
   constructor(
     private friendsService: FriendsService,
-    private conversationService: ConversationService
+    private conversationService: ConversationService,
+    private userInfoService: UserInfoService
   ) { }
 
   /**
@@ -101,6 +104,17 @@ export class FriendsComponent implements OnInit, OnDestroy {
         this.onFireSearchForFriend.bind(this),
         this.onError.bind(this)
       );
+
+    this.userInfoService.getUserInfo().subscribe(
+      (userInfoData) => {
+        this.myUsername = userInfoData.username;
+      }
+    );
+  }
+
+  addFriend(newFriend: Friend) {
+    this.friendsService.addFriend(newFriend);
+    this.friendsSearchResult = null;
   }
 
   /**
@@ -133,10 +147,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   onMessageSent (text: string) {
-    const message = new Message(text, 'stemmlerjs');
+    const message = new Message(text, this.myUsername);
     this.currentConversation.messages.push(message);
     // also send request to the backend.
-    this.conversationService.sendMessage('stemmlerjs', text);
+    this.conversationService.sendMessage(this.myUsername, text);
   }
 
   /**
@@ -167,16 +181,16 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.currentConversation = new Conversation(friend, []);
     // Notify firebase to retrieve the rest of the conversation details
     // (the messages)
-    this.conversationService.changeConversation('stemmlerjs', friend.username);
+    this.conversationService.changeConversation(this.myUsername, friend.username);
   }
 
   onError (error) {
     console.log(error);
   }
 
-  ngOnDestroy(): void {
-    this.friendsSubscription.unsubscribe();
-    this.conversationSubscription.unsubscribe();
-    this.newFriendsSearchSubscription.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.friendsSubscription.unsubscribe();
+  //   this.conversationSubscription.unsubscribe();
+  //   this.newFriendsSearchSubscription.unsubscribe();
+  // }
 }

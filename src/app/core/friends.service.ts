@@ -5,6 +5,7 @@ import { Friend } from '../shared/friend';
 import { Conversation } from '../shared/conversation';
 import { ConversationAPIResponse } from '../shared/conversation-api-response';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { UserInfoService } from './user-info.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class FriendsService {
   private friendsListSubscription: Subscription = null;
   private friendsSearch = new ReplaySubject<Friend>(null);
 
-  constructor (private http: HttpClient, private db: AngularFireDatabase) {
+  constructor (private http: HttpClient, private db: AngularFireDatabase, private userInfo: UserInfoService) {
     this.db = db;
   }
 
@@ -57,6 +58,23 @@ export class FriendsService {
     }
   }
 
+  public addFriend (newFriend: Friend) {
+    const userInfo = this.userInfo.getUserInfo()
+      .subscribe((userInfoResult) => {
+        debugger;
+        const { username } = userInfoResult;
+        const friendsUsername = newFriend.username;
+
+        // Now, we need to create the relationship between this user
+        // and the new user.
+        const myRef = this.db.object(`friends/${username}/${friendsUsername}`);
+        const theirRef = this.db.object(`friends/${friendsUsername}/${username}`);
+
+        myRef.set({ isOnline: true, username: friendsUsername });
+        theirRef.set({ isOnline: true, username: username, accepted: false });
+      });
+  }
+
   /**
    * searchForFriendByUsername
    * @function that allows us to search for friends by username
@@ -65,7 +83,7 @@ export class FriendsService {
    * @param {String} username of friend
    */
 
-  searchForFriendByUsername (username: string): void {
+  public searchForFriendByUsername (username: string): void {
     this.db.database.ref('users')
       .orderByChild('username')
       .equalTo(username)

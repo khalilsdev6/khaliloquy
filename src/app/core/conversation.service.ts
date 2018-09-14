@@ -11,9 +11,16 @@ export class ConversationService {
   private messages = new BehaviorSubject([]);
   private messagesSubscription: Subscription = null;
   private currentConversationKey = "";
-  
+
   constructor(private db: AngularFireDatabase) {
     this.db = db;
+  }
+
+  public sendMessage (from: string, text: string) {
+    const conversationKey = this._getConversationKey();
+    const timestamp = this._createTimestamp();
+    const conversationRef = this.db.object(`conversations/${conversationKey}/${timestamp}`);
+    conversationRef.set({ from: from, text: text });
   }
 
   /**
@@ -86,12 +93,5 @@ export class ConversationService {
 
   private _getConversationKey(): string {
     return this.currentConversationKey;
-  }
-
-  public sendMessage (from: string, text: string) {
-    const conversationKey = this._getConversationKey();
-    const timestamp = this._createTimestamp();
-    const conversationRef = this.db.object(`conversations/${conversationKey}/${timestamp}`);
-    conversationRef.set({ from: from, text: text });
   }
 }

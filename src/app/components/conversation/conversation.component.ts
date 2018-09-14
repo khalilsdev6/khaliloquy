@@ -4,6 +4,7 @@ import { Message } from '../../shared/message';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ConversationService } from '../../core/conversation.service';
+import { UserInfoService } from '../../core/user-info.service';
 
 @Component({
   selector: 'app-conversation',
@@ -12,17 +13,21 @@ import { ConversationService } from '../../core/conversation.service';
 })
 export class ConversationComponent implements OnInit, AfterViewChecked {
 
-  private myUsername = 'stemmlerjs';
+  private myUsername = "";
 
   @Input('conversation') conversation: Conversation;
   @ViewChild('chatbar') chatbarRef: ElementRef;
   @Output('sentMessage') sentMessage = new EventEmitter();
   @ViewChild('chatMessages') chatMessagesRef: ElementRef;
 
-  constructor() { }
+  constructor(private userInfo: UserInfoService) { }
 
   ngOnInit() {
     this.scrollToBottom();
+    this.userInfo.getUserInfo().subscribe(
+      (userInfoData) => {
+        this.myUsername = userInfoData.username;
+      });
   }
 
   ngAfterViewChecked () {

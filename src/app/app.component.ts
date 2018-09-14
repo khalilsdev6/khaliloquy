@@ -17,7 +17,6 @@ export class AppComponent {
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit(): void {
-    this.friendsService.init('stemmlerjs');
     this.authService.init();
   }
 }

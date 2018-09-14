@@ -50,7 +50,7 @@
 
       <!-- New friend from search results -->
       <li 
-        (click)="changeConversation(friend)" 
+        (click)="addFriend(friendsSearchResult)" 
         class="friend" 
         *ngIf="friendsSearchResult">
         <app-letter-avatar username="{{friendsSearchResult.username}}"></app-letter-avatar>

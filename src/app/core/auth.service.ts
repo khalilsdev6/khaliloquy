@@ -5,6 +5,7 @@ import { AccountService } from './account.service';
 import { User } from '../shared/user';
 import { Router } from '@angular/router';
 import { UserInfoService } from './user-info.service';
+import { FriendsService } from './friends.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private accountService: AccountService,
     private router: Router,
-    private userInfoService: UserInfoService
+    private userInfoService: UserInfoService,
+    private friendsService: FriendsService
   ) { }
 
   init () {
@@ -34,6 +36,7 @@ export class AuthService {
       const { displayName, photoURL } = user;
       // Set user info
       this.userInfoService.setUserInfo(new User(displayName, '', photoURL));
+      this.friendsService.init(displayName);
     } else {
       // No user is signed in.
       // Redirect them to the front page.

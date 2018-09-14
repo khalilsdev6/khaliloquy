@@ -70,4 +70,15 @@ export class UserInfoService {
     return this.userSubject;
   }
 
+  /**
+   * getUserInfoPromise
+   *
+   * @function that returns the current user info as a promise.
+   * @return {Promise<User>}
+   */
+
+  getUserInfoPromise (): Promise<User> {
+    return this.userSubject.toPromise();
+  }
+
 }
