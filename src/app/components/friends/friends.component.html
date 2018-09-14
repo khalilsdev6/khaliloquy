@@ -41,7 +41,7 @@
         (click)="changeConversation(friend)" 
         class="friend" 
         *ngFor="let friend of friends | searchFriends : searchText">
-        <app-letter-avatar username="{{friend.username}}"></app-letter-avatar>
+        <app-letter-avatar *ngIf="!friend.profilePictureUrl" username="{{friend.username}}"></app-letter-avatar>
         <div class="text-container">
           <div class="username">{{friend.username}}</div>
           <div class="last-message">{{friend.getLastMessage()}}</div>

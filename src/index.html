@@ -18,6 +18,20 @@
       background: linear-gradient(0.6turn, #353D95, #D056FD);
       color: white;
       font-family: 'Roboto', sans-serif;
+      display: block;
+      position: relative;
+    }
+
+    body::after {
+      content: "";
+      background-image: url('../assets/images/small_steps.png');
+      opacity: 0.12;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      z-index: 2;   
     }
   </style>
 </head>
